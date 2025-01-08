@@ -26,11 +26,9 @@ frontend: true | false # Set frontend=true to deploy only /build directory into 
 #  enabled: true
 #  fail_on_quality_gate: true
 #  sources_path: "/"
-#  libraries_path: "**/node_modules/**/*"
 #  tests_path: "/"
-#  tests_inclusions: "**/test/**/*"
-#  tests_libraries: "**/node_modules/**/*"
-#  exclusions: "**/node_modules/**/*,"**/test/**/*"
+#  tests_inclusions: "__tests__/**"
+#  exclusions: "**/__init__.py,**/main.py,**/enum/*,**/model/*"
 #  extra_exclusions:
 #  branch_disabled: true # uncomment only if you are using Community Sonarqube
 #
