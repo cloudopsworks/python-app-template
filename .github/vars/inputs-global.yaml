@@ -8,7 +8,9 @@ frontend: true | false # Set frontend=true to deploy only /build directory into 
 ## Image variant is alpine by default, uncomment to use different image variant for the specified dist
 #python:
 #  version: 3.12
-#  dist: adopt
+#  dist: pip | pipenv | poetry
+#  ruff: true | false (defaults: false)
+#  mypy: true | false (defaults: false)
 #  image_variant: alpine
 #
 # Set Snyk processing to true if want to enable, the tool is disabled by default
