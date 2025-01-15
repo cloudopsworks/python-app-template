@@ -4,7 +4,12 @@
 #            Distributed Under Apache v2.0 License
 #
 zipGlobs:
-  - "."
+  - "app/**/*"
+  - "*.py"
+  - "*.pyc"
+  - "*.pyo"
+  - "requirements.txt"
+  - "pyproject.toml"
 excludeGlobs:
   - Dockerfile
   - .helmignore
@@ -28,6 +33,11 @@ excludeGlobs:
   - .venv
   - env/
   - venv/
+  - bom.xml
+  - .coverage
+  - coverage.xml
+  - test-results.xml
+  - htmlcov/*
 
 # Repo & CD Configurations
 # Some of them previously managed in OWNERS file

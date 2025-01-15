@@ -85,14 +85,14 @@ jobs:
         id: config
         uses: ./bp/ci/config
 
-      - name: Node.js Configuration
+      - name: Python Configuration
         id: python-config
         uses: ./bp/ci/python/config
         with:
           environment: ${{ steps.config.outputs.environment }}
           has_preview: ${{ steps.config.outputs.has_preview }}
 
-      - name: Build Node.js
+      - name: Build Python
         id: build
         uses: ./bp/ci/python/build
         with:
