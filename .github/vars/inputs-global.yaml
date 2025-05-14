@@ -12,6 +12,7 @@ frontend: true | false # Set frontend=true to deploy only /build directory into 
 #  ruff: true | false (defaults: false)
 #  mypy: true | false (defaults: false)
 #  image_variant: alpine
+#  with_dependencies: true | false (defaults: false)
 #
 # Set Snyk processing to true if want to enable, the tool is disabled by default
 #snyk:
