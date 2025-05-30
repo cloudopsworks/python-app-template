@@ -11,7 +11,8 @@ apigw_definitions:
 aws:
   stage: dev
   stage_only: false
-  #lambda: true
+  #lambda: true # uncomment if lambda functions are used in the API Gateway will inject stage variable `lambdaEndpoint`
+  #is_http: true # uncomment if using HTTP APIs
   #endpoint_type: REGIONAL
   #vpc_endpoint_ids:
   # - vpce-1234567890abcdef0
