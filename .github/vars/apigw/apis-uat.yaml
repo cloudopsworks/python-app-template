@@ -11,6 +11,7 @@ apigw_definitions:
 aws:
   stage: uat
   stage_only: false
+  #lambda: true # uncomment if lambda functions are used in the API Gateway will inject stage variable `lambdaEndpoint`
   #endpoint_type: REGIONAL
   #vpc_endpoint_ids:
   # - vpce-1234567890abcdef0
@@ -38,7 +39,7 @@ aws:
     enabled: false
     name: test-apigw-backup
     prefix_path: test
-  stage_variables:
+  stage_variables: # comment out if not needed or lambda function does not require stage variables
     - name: url
       value: test-api.uat.sample.com
   authorizers:

@@ -11,6 +11,7 @@ apigw_definitions:
 aws:
   stage: dev
   stage_only: false
+  #lambda: true
   #endpoint_type: REGIONAL
   #vpc_endpoint_ids:
   # - vpce-1234567890abcdef0
