@@ -8,36 +8,55 @@ on:
   workflow_call:
     inputs:
       deployment_name:
+        description: 'Deployment Name'
         required: true
         type: string
       cloud:
+        description: 'Cloud Provider'
         required: true
         type: string
       cloud_type:
+        description: 'Cloud Type: kubernetes/eks/beanstalk/function etc.'
         required: true
         type: string
       runner_set:
+        description: 'Runner Set'
         required: true
         type: string
       default_aws_region:
+        description: 'Default AWS Region'
         required: false
         type: string
         default: ''
       default_aws_sts_role_arn:
+        description: 'Default AWS STS Role ARN'
         required: false
         type: string
         default: ''
       terraform_state_conf:
+        description: 'Terraform State Configuration'
         required: true
         type: string
       semver:
         required: true
         type: string
       default_azure_rg:
+        description: 'Default Azure Resource Group'
+        required: false
+        type: string
+        default: ''
+      default_gcp_region:
+        description: 'Default GCP Region'
+        required: false
+        type: string
+        default: ''
+      default_gcp_project:
+        description: 'Default GCP Project ID'
         required: false
         type: string
         default: ''
       apis_enabled:
+        description: 'API Gateway Enabled'
         required: false
         type: boolean
         default: false
@@ -64,6 +83,9 @@ on:
         required: false
       azure_service_secret:
         description: 'Azure Service Principal Secret'
+        required: false
+      gcp_credentials:
+        description: 'GCP Credentials JSON'
         required: false
 
 jobs:
@@ -99,17 +121,35 @@ jobs:
           deployment_name: ${{ inputs.deployment_name }}
           environment: ${{ steps.config.outputs.environment }}
 
-#      - name: Deploy API Azure
-#        if: ${{ inputs.cloud == 'AZURE' }}
-#        uses: ./bp/cd/deploy/api/azure
-#        with:
-#          token: ${{ secrets.token }}
+      - name: Deploy API Azure
+        if: ${{ inputs.cloud == 'AZURE' }}
+        uses: ./bp/cd/deploy/api/azure
+        with:
+          token: ${{ secrets.token }}
+          azure_service_id: ${{ secrets.azure_service_id }}
+          azure_service_secret: ${{ secrets.azure_service_secret }}
+          azure_rg: ${{ steps.config.outputs.azure_rg != '' && steps.config.outputs.azure_rg || inputs.default_azure_rg }}
+          terraform_state_conf: ${{ inputs.terraform_state_conf }}
+          release_name: ${{ steps.config.outputs.release_name }}
+          release_version: ${{ inputs.semver }}
+          project_key: ${{ steps.config.outputs.project_key }}
+          deployment_name: ${{ inputs.deployment_name }}
+          environment: ${{ steps.config.outputs.environment }}
 
-#      - name: Deploy API GoogleCloud
-#        if: ${{ inputs.cloud == 'GCP' }}
-#        uses: ./bp/cd/deploy/api/gcp
-#        with:
-#          token: ${{ secrets.token }}
+      - name: Deploy API GoogleCloud
+        if: ${{ inputs.cloud == 'GCP' }}
+        uses: ./bp/cd/deploy/api/gcp
+        with:
+          token: ${{ secrets.token }}
+          gcp_credentials: ${{ secrets.gcp_credentials }}
+          gcp_project: ${{ steps.config.outputs.gcp_project != '' && steps.config.outputs.gcp_project || inputs.default_gcp_project }}
+          gcp_region: ${{ steps.config.outputs.gcp_region != '' && steps.config.outputs.gcp_region || inputs.default_gcp_region }}
+          terraform_state_conf: ${{ inputs.terraform_state_conf }}
+          release_name: ${{ steps.config.outputs.release_name }}
+          release_version: ${{ inputs.semver }}
+          project_key: ${{ steps.config.outputs.project_key }}
+          deployment_name: ${{ inputs.deployment_name }}
+          environment: ${{ steps.config.outputs.environment }}
 
   deploy-green:
     name: 'Deploy Green Environment - Branch: ${{ github.ref_name }} - Env: ${{ inputs.deployment_name }}'
@@ -165,22 +205,24 @@ jobs:
           observability_enabled: ${{ inputs.observability_enabled }}
           observability_agent: ${{ inputs.observability_agent }}
 
-#      - name: Deploy GCP
-#        if: ${{ inputs.cloud == 'GCP' }}
-#        uses: ./bp/cd/deploy/app/azure
-#        with:
-#          qualifier: 'green'
-#          cloud_type: ${{ inputs.cloud_type }}
-#          token: ${{ secrets.token }}
-#          gcp_service_id: ${{ secrets.gcp_service_id }}
-#          terraform_state_conf: ${{ inputs.terraform_state_conf }}
-#          release_name: ${{ steps.config.outputs.release_name }}
-#          release_version: ${{ inputs.semver }}
-#          project_key: ${{ steps.config.outputs.project_key }}
-#          deployment_name: ${{ inputs.deployment_name }}
-#          environment: ${{ steps.config.outputs.environment }}
-#          observability_enabled: ${{ inputs.observability_enabled }}
-#          observability_agent: ${{ inputs.observability_agent }}
+      - name: Deploy GCP
+        if: ${{ inputs.cloud == 'GCP' }}
+        uses: ./bp/cd/deploy/app/gcp
+        with:
+          qualifier: 'green'
+          cloud_type: ${{ inputs.cloud_type }}
+          token: ${{ secrets.token }}
+          gcp_credentials: ${{ secrets.gcp_credentials }}
+          gcp_project: ${{ steps.config.outputs.gcp_project != '' && steps.config.outputs.gcp_project || inputs.default_gcp_project }}
+          gcp_region: ${{ steps.config.outputs.gcp_region != '' && steps.config.outputs.gcp_region || inputs.default_gcp_region }}
+          terraform_state_conf: ${{ inputs.terraform_state_conf }}
+          release_name: ${{ steps.config.outputs.release_name }}
+          release_version: ${{ inputs.semver }}
+          project_key: ${{ steps.config.outputs.project_key }}
+          deployment_name: ${{ inputs.deployment_name }}
+          environment: ${{ steps.config.outputs.environment }}
+          observability_enabled: ${{ inputs.observability_enabled }}
+          observability_agent: ${{ inputs.observability_agent }}
 
   deploy-blue:
     needs:
@@ -222,6 +264,7 @@ jobs:
         if: ${{ inputs.cloud == 'AZURE' }}
         uses: ./bp/cd/deploy/app/azure
         with:
+          qualifier: 'blue'
           cloud_type: ${{ inputs.cloud_type }}
           token: ${{ secrets.token }}
           azure_service_id: ${{ secrets.azure_service_id }}
@@ -236,12 +279,24 @@ jobs:
           observability_enabled: ${{ inputs.observability_enabled }}
           observability_agent: ${{ inputs.observability_agent }}
 
-#      - name: Deploy GCP
-#        if: ${{ inputs.cloud == 'GCP' }}
-#        uses: ./bp/cd/deploy/app/azure
-#        with:
-#          cloud_type: ${{ inputs.cloud_type }}
-#          token: ${{ secrets.token }}
+      - name: Deploy GCP
+        if: ${{ inputs.cloud == 'GCP' }}
+        uses: ./bp/cd/deploy/app/gcp
+        with:
+          qualifier: 'blue'
+          cloud_type: ${{ inputs.cloud_type }}
+          token: ${{ secrets.token }}
+          gcp_credentials: ${{ secrets.gcp_credentials }}
+          gcp_project: ${{ steps.config.outputs.gcp_project != '' && steps.config.outputs.gcp_project || inputs.default_gcp_project }}
+          gcp_region: ${{ steps.config.outputs.gcp_region != '' && steps.config.outputs.gcp_region || inputs.default_gcp_region }}
+          terraform_state_conf: ${{ inputs.terraform_state_conf }}
+          release_name: ${{ steps.config.outputs.release_name }}
+          release_version: ${{ inputs.semver }}
+          project_key: ${{ steps.config.outputs.project_key }}
+          deployment_name: ${{ inputs.deployment_name }}
+          environment: ${{ steps.config.outputs.environment }}
+          observability_enabled: ${{ inputs.observability_enabled }}
+          observability_agent: ${{ inputs.observability_agent }}
 
   destroy-green:
     needs:
@@ -295,19 +350,25 @@ jobs:
           project_key: ${{ steps.config.outputs.project_key }}
           deployment_name: ${{ inputs.deployment_name }}
           environment: ${{ steps.config.outputs.environment }}
+          observability_enabled: ${{ inputs.observability_enabled }}
+          observability_agent: ${{ inputs.observability_agent }}
 
-#      - name: Destroy GCP
-#        if: ${{ inputs.cloud == 'GCP' }}
-#        uses: ./bp/cd/deploy/app/azure
-#        with:
-#          destroy: true
-#          qualifier: 'green'
-#          cloud_type: ${{ inputs.cloud_type }}
-#          token: ${{ secrets.token }}
-#          gcp_service_id: ${{ secrets.gcp_service_id }}
-#          terraform_state_conf: ${{ inputs.terraform_state_conf }}
-#          release_name: ${{ steps.config.outputs.release_name }}
-#          release_version: ${{ inputs.semver }}
-#          project_key: ${{ steps.config.outputs.project_key }}
-#          deployment_name: ${{ inputs.deployment_name }}
-#          environment: ${{ steps.config.outputs.environment }}
+      - name: Destroy GCP
+        if: ${{ inputs.cloud == 'GCP' }}
+        uses: ./bp/cd/deploy/app/azure
+        with:
+          destroy: true
+          qualifier: 'green'
+          cloud_type: ${{ inputs.cloud_type }}
+          token: ${{ secrets.token }}
+          gcp_credentials: ${{ secrets.gcp_credentials }}
+          gcp_project: ${{ steps.config.outputs.gcp_project != '' && steps.config.outputs.gcp_project || inputs.default_gcp_project }}
+          gcp_region: ${{ steps.config.outputs.gcp_region != '' && steps.config.outputs.gcp_region || inputs.default_gcp_region }}
+          terraform_state_conf: ${{ inputs.terraform_state_conf }}
+          release_name: ${{ steps.config.outputs.release_name }}
+          release_version: ${{ inputs.semver }}
+          project_key: ${{ steps.config.outputs.project_key }}
+          deployment_name: ${{ inputs.deployment_name }}
+          environment: ${{ steps.config.outputs.environment }}
+          observability_enabled: ${{ inputs.observability_enabled }}
+          observability_agent: ${{ inputs.observability_agent }}
