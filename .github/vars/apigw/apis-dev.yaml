@@ -24,6 +24,7 @@ aws:
   #vpc_link_name: test-link-dev # DEPRECATED
   rest_vpc_link_name: test-link-dev # use this for REST APIs
   #http_vpc_link_id: http-test-link-dev # use this for HTTP APIs
+  #fail_on_warnings: false # uncomment to disable fail on warnings
   #log_location: /aws/apigateway
   #log_retention_days: 30
   #settings:
