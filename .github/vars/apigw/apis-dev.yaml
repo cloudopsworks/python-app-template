@@ -53,6 +53,11 @@ aws:
       value: test-api.dev.sample.com
   authorizers:
     - name: Lambda-Auth
+      #scheme:
+      #  name: Authorization
+      #  in: header
+      #  type: apiKey
+      #  authtype: custom
       authtype: lambda
       #result_ttl_seconds: 10
       #identity_source: method.request.header.Authorization
