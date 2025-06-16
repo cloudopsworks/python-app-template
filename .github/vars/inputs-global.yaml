@@ -11,6 +11,7 @@ frontend: true | false # Set frontend=true to deploy only /build directory into 
 #  dist: pip | pipenv | poetry
 #  ruff: true | false (defaults: false)
 #  mypy: true | false (defaults: false)
+#  tests: pytest | unittest | pyunit | nose (defaults: pytest)
 #  image_variant: alpine
 #  with_dependencies: true | false (defaults: false)
 #
