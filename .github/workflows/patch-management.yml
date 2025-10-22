@@ -157,7 +157,7 @@ jobs:
           sonarqube_project_key: ${{ steps.config.outputs.project_key }}
           project_owner: ${{ steps.config.outputs.project_owner }}
           patched_token: ${{ secrets.PATCHED_CODES_TOKEN }}
-          language: 'java'
+          language: 'python'
 
   workflow_upgrade:
     name: "Workflow Version Baseline Upgrade"
