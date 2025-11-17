@@ -1,5 +1,5 @@
 environment: "dev|uat|prod|demo"
-runner_set: "RUNNER-ENV"
+#runner_set: "RUNNER-ENV" # Optional: when using self-hosted runners
 #disable_deploy: true
 container_registry: REGISTRY # allways required for GCP CloudRun
 #
@@ -27,6 +27,7 @@ cloudrun:
   #limits:
   #  cpu: "1" # e.g., "0.25", "0.5", "1", "2", "4"
   #  memory: "512Mi" # e.g., 128Mi, 256Mi, 512Mi, 1Gi, 2Gi, 4Gi, 8Gi, 16Gi
+  #  nvidia.com/gpu: "1" # e.g., "1", "2", "4" (requires GKE Autopilot)
 
   ##
   # Service Scaling Configuration
@@ -77,7 +78,7 @@ cloudrun:
   #  - name: cloudsql
   #    instances:
   #      - name: instance_name
-  #      - connection_name: project:region:instance
+  #        connection_name: project:region:instance
   #  - name: emptydir
   #    empty_dir:
   #      medium: "MEMORY" # optional, default is "MEMORY
