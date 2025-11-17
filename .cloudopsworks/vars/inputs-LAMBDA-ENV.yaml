@@ -19,10 +19,8 @@ lambda:
   arch: x86_64 | arm64
   iam: {}
   #  enabled: true
-  #    role_name: lambda-role # Optional: required only if iam.enabled=false, else will be ignored.
   #  execRole:
   #    enabled: true
-  #    role_name: lambda-exec-role # Optional: set if the role name is different from the default & execRole.enabled=false, else will be ignored.
   #    principals:
   #      - lambda.amazonaws.com
   #      - apigateway.amazonaws.com

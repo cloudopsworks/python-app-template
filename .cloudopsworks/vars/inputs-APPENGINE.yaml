@@ -4,6 +4,12 @@ environment: "dev|uat|prod|demo"
 versions_bucket: "VERSIONS_BUCKET"
 #blue_green: true # uncomment for Prod environment to support blue/green deploy
 container_registry: REGISTRY # optional if Preview = false, can comment out
+#
+# Optional Python/Pip Additional ENV variables
+#python_extra_env: |
+#  ENV_VAR1=value1
+#  ENV_VAR2=value2
+#
 gcp:
   region: "GCP_REGION"
   project_id: "GCP_PROJECT"
