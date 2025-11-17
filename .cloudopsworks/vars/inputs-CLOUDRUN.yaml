@@ -1,4 +1,4 @@
-environment: "dev"
+environment: "dev|uat|prod|demo"
 runner_set: "RUNNER-ENV"
 #disable_deploy: true
 container_registry: REGISTRY # allways required for GCP CloudRun
@@ -65,33 +65,33 @@ cloudrun:
 
   ##
   # Cloud Run Volume configuration
-  volumes:
-    - name: secret-volume
-      secret:
-        secret_name: my-secret
-        default_mode: "0444"
-        items:
-          - path: secret-file.txt
-            version: latest
-            mode: "0444"
-    - name: cloudsql
-      instances:
-        - name: instance_name
-        - connection_name: project:region:instance
-    - name: emptydir
-      empty_dir:
-        medium: "MEMORY" # optional, default is "MEMORY
-        size_limit: "100Mi" # optional
-    - name: gcs
-      gcs:
-        bucket_name: my-bucket  # required
-        read_only: true | false # default: false
-        mount_options: []    # optional
-    - name: nfs
-      nfs:
-        server: nfs-server.example.com  # required
-        path: /path/to/share          # required
-        read_only: true | false       # default: false
+  #volumes:
+  #  - name: secret-volume
+  #    secret:
+  #      secret_name: my-secret
+  #      default_mode: "0444"
+  #      items:
+  #        - path: secret-file.txt
+  #          version: latest
+  #          mode: "0444"
+  #  - name: cloudsql
+  #    instances:
+  #      - name: instance_name
+  #      - connection_name: project:region:instance
+  #  - name: emptydir
+  #    empty_dir:
+  #      medium: "MEMORY" # optional, default is "MEMORY
+  #      size_limit: "100Mi" # optional
+  #  - name: gcs
+  #    gcs:
+  #      bucket_name: my-bucket  # required
+  #      read_only: true | false # default: false
+  #      mount_options: []    # optional
+  #  - name: nfs
+  #    nfs:
+  #      server: nfs-server.example.com  # required
+  #      path: /path/to/share          # required
+  #      read_only: true | false       # default: false
   #
   #volume_mounts:
   #  - name: volume-name
@@ -151,13 +151,13 @@ cloudrun:
 
   ##
   # Optional: triggers notifications for the Cloud Run function.
-  triggers:
-    pubsub:
-      topic: PUBSUB_TOPIC_NAME
-    cloud_storage:
-      bucket_name: BUCKET_NAME
-      event_types:
-        - finalized
-        - deleted
-      filter_prefix: "OtherLogs/"
-      filter_suffix: ".log"
+  #triggers:
+  #  pubsub:
+  #    topic: PUBSUB_TOPIC_NAME
+  #  cloud_storage:
+  #    bucket_name: BUCKET_NAME
+  #    event_types:
+  #      - finalized
+  #      - deleted
+  #    filter_prefix: "OtherLogs/"
+  #    filter_suffix: ".log"
