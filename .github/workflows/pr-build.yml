@@ -236,8 +236,9 @@ jobs:
           cloud_type: ${{ steps.config.outputs.cloud }}
           token: ${{ secrets.BOT_TOKEN }}
           gcp_credentials: ${{ secrets.PREVIEW_GCP_CREDENTIALS }}
-          gcp_project: ${{ steps.config.outputs.gcp_project != '' && steps.config.outputs.gcp_project || inputs.PREVIEW_GCP_PROJECT }}
-          gcp_region: ${{ steps.config.outputs.gcp_region != '' && steps.config.outputs.gcp_region || inputs.PREVIEW_GCP_REGION }}
+          gcp_impersonate_sa: ${{ vars.PREVIEW_CGP_IMPERSONATE_SA }}
+          gcp_project: ${{ vars.PREVIEW_GCP_PROJECT }}
+          gcp_region: ${{ vars.PREVIEW_GCP_REGION }}
           terraform_state_conf: ${{ inputs.terraform_state_conf }}
           release_name: ${{ steps.config.outputs.release_name }}
           release_version: ${{ needs.code-build.outputs.semver }}
