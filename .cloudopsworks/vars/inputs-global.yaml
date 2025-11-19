@@ -4,10 +4,10 @@ environment_name: "ENV_NAME"
 repository_owner: "REPO_OWNER" # Required
 frontend: true | false # Set frontend=true to deploy only /build directory into ngnix enabled Dockerfile
 #
-## Default python version is 3.12, uncomment to build with different, default dist is adopt, uncomment to use different dist
+## Default python version is 3.14, uncomment to build with different, default dist is adopt, uncomment to use different dist
 ## Image variant is alpine by default, uncomment to use different image variant for the specified dist
 #python:
-#  version: 3.12
+#  version: 3.11
 #  dist: pip | pipenv | poetry
 #  ruff: true | false (defaults: false)
 #  mypy: true | false (defaults: false)
