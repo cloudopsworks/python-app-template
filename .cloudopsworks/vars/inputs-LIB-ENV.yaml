@@ -1,6 +1,6 @@
 environment: "dev|uat|prod|demo"
 # This file contains the environment variables for the Kubernetes deployment
-runner_set: "RUNNER-ENV"
+#runner_set: "RUNNER-ENV" # Optional: when using self-hosted runners
 #
 # Optional Python/Pip Additional ENV variables
 #python_extra_env: |
