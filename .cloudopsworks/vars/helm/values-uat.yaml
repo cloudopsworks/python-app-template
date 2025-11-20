@@ -22,7 +22,9 @@
 
 # Pod specific Annotations
 #podAnnotations: {}
-# Affinity  & Tolerations configuration for Pods
+#  instrumentation.opentelemetry.io/inject-python: "true" # Uncomment and remove brackets to enable opentelemetry instrumentation
+
+# Affinity & Antiaffinity configuration for Pods
 #affinity: {}
 
 # Node / Pod Tolerations
@@ -150,5 +152,5 @@ ingress:
 #            - type: Percent
 #              value: 100
 #              periodSeconds: 15
-  triggers: {}
-  # {list of triggers to activate scaling of the target resource, see keda documentation for details}
+#  triggers: {}
+#  # {list of triggers to activate scaling of the target resource, see keda documentation for details}
