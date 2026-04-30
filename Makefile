@@ -8,7 +8,7 @@ TOML ?= toml
 
 -include $(shell curl -sSL -o .tronador "https://cowk.io/acc"; echo .tronador)
 
-## Node Version Bump and creates VERSION File - Uses always the FullSemVer from GitVersion (no need to prepend the 'v').
+## Python Version Bump and creates VERSION File - Uses always the FullSemVer from GitVersion (no need to prepend the 'v').
 version: packages/install/gitversion
 	$(call assert-set,GITVERSION)
 ifeq ($(GIT_IS_TAG),1)
@@ -23,7 +23,7 @@ endif
 code/install/tomlcli:
 	@pip3 install toml-cli
 
-# Modify package.json to change the project name with the $(PROJECT) variable
+# Modify pyproject.toml to change the project name with the $(PROJECT) variable
 ## Code Initialization for Node Project
 code/init: packages/install/gitversion packages/install/gh packages/install/yq code/install/tomlcli
 	$(call assert-set,GITVERSION)

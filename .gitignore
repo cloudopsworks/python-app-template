@@ -184,12 +184,20 @@ cython_debug/
 .vscode/
 
 ### Tronador ###
-tronador/
 .tronador*.mk
 .tronador
+tronador/
 
 ### TEST COVERAGE ###
 /test-results.xml
 /coverage.xml
 /.coverage
 /htmlcov/
+
+### AI Agents ###
+.claude/
+.gstack/
+.opencode/
+.omc/
+.omx/
+.ai/

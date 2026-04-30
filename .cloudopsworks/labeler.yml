@@ -19,7 +19,7 @@ size-XS:
 - any: [ '*Dockerfile' ]
 
 size-S:
-- any: [ 'package*.json', 'node_modules/**/*', 'charts/**/*' ]
+- any: [ 'pyproject.toml', 'charts/**/*' ]
 
 size-XL:
-- any: [ '**/*.js', '!*Dockerfile', '!package*.json', '!charts/**/*', '!node_modules/**/*' ]
+- any: [ '**/*.py', '!*Dockerfile', '!pyproject.toml', '!charts/**/*' ]
