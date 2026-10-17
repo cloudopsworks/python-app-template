@@ -118,6 +118,7 @@ lambda:
   #      maxAge: 86400
   #  - id: "dev"
   #    authorizationType: "NONE"
+
   ##
   # Optionals: event bridge scheduling
   #            Remove comment on items to enable
