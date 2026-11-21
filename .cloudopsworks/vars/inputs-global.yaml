@@ -89,7 +89,7 @@ frontend: true | false # Set frontend=true to deploy only /build directory into 
 #python_extra_env: |
 #  ENV_VAR1=value1
 #  ENV_VAR2=value2
-##
+#
 # Preview configuration, if enabled will create a preview environment for each PR
 #preview:
 #  enabled: true
